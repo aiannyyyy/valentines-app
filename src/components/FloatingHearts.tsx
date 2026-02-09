@@ -1,8 +1,10 @@
+import './FloatingHearts.css';
+
 export default function FloatingHearts() {
   const hearts = Array.from({ length: 20 });
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
       {hearts.map((_, i) => {
         const left = Math.random() * 100;
         const size = 12 + Math.random() * 20;
@@ -12,7 +14,7 @@ export default function FloatingHearts() {
         return (
           <span
             key={i}
-            className="absolute bottom-0 animate-float text-pink-400 dark:text-pink-500"
+            className="floating-heart"
             style={{
               left: `${left}%`,
               fontSize: `${size}px`,

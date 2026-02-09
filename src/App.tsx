@@ -27,7 +27,7 @@ export default function App() {
         onClick={() => setDark(!dark)}
         className="absolute top-4 right-4 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
       >
-        {dark ? "☀️ Light" : "🌙 Dark"}
+        {dark ? "☀️" : "🌙"}
       </button>
 
       <h1 className="text-3xl sm:text-4xl font-bold text-pink-600 dark:text-pink-400 mb-8">
