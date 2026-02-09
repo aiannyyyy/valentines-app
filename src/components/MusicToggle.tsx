@@ -1,12 +1,19 @@
 import { useRef, useState } from "react";
 
 export default function MusicToggle() {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [playing, setPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [playing, setPlaying] = useState<boolean>(false);
 
-  const toggle = () => {
-    if (!audioRef.current) return;
-    playing ? audioRef.current.pause() : audioRef.current.play();
+  const toggleMusic = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (playing) {
+      audio.pause();
+    } else {
+      audio.play().catch(() => {});
+    }
+
     setPlaying(!playing);
   };
 
@@ -14,7 +21,7 @@ export default function MusicToggle() {
     <>
       <audio ref={audioRef} loop src="/love.mp3" />
       <button
-        onClick={toggle}
+        onClick={toggleMusic}
         className="absolute top-4 left-4 px-4 py-2 rounded-full bg-pink-500 text-white text-sm"
       >
         {playing ? "⏸ Music" : "🎵 Music"}

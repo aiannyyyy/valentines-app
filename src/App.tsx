@@ -5,7 +5,6 @@ import FloatingHearts from "./components/FloatingHearts";
 import MusicToggle from "./components/MusicToggle";
 
 export default function App() {
-  const [grown, setGrown] = useState(false);
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
@@ -20,29 +19,20 @@ export default function App() {
       {/* Theme toggle */}
       <button
         onClick={() => setDark(!dark)}
-        className="absolute top-4 right-4 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700"
+        className="absolute top-4 right-4 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
       >
         {dark ? "☀️ Light" : "🌙 Dark"}
       </button>
 
-      <h1 className="text-2xl sm:text-3xl font-bold text-pink-600 dark:text-pink-400 mb-6">
-        Happy Valentine’s Day 💖
+      <h1 className="text-3xl sm:text-4xl font-bold text-pink-600 dark:text-pink-400 mb-8">
+        Happy Valentine's Day 💖
       </h1>
 
-      <Flower grown={grown} />
+      <Flower />
 
-      {grown && (
-        <div className="mt-8 animate-fadeIn">
-          <FlipCard />
-        </div>
-      )}
-
-      <button
-        onClick={() => setGrown(true)}
-        className="mt-8 px-6 py-3 bg-pink-500 dark:bg-pink-600 text-white rounded-full"
-      >
-        Grow Love 🌱
-      </button>
+      <div className="mt-12 animate-fadeIn">
+        <FlipCard />
+      </div>
     </div>
   );
 }
