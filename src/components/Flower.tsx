@@ -1,6 +1,4 @@
-interface Props {
-  grown: boolean;
-}
+import { useEffect, useState } from "react";
 
 interface TulipProps {
   grown: boolean;
@@ -99,17 +97,32 @@ function Tulip({ grown, color, darkColor, delay, height }: TulipProps) {
   );
 }
 
-export default function Flower({ grown }: Props) {
+export default function Flower() {
+  const [grown, setGrown] = useState(false);
+
+  // Auto-grow flowers on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setGrown(true);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
+
   const tulips = [
     { color: "bg-pink-400", darkColor: "dark:bg-pink-500", delay: 0, height: 180 },
-    { color: "bg-red-400", darkColor: "dark:bg-red-500", delay: 200, height: 160 },
-    { color: "bg-purple-400", darkColor: "dark:bg-purple-500", delay: 400, height: 170 },
-    { color: "bg-pink-500", darkColor: "dark:bg-pink-600", delay: 100, height: 165 },
-    { color: "bg-rose-400", darkColor: "dark:bg-rose-500", delay: 300, height: 175 },
+    { color: "bg-red-400", darkColor: "dark:bg-red-500", delay: 150, height: 165 },
+    { color: "bg-yellow-400", darkColor: "dark:bg-yellow-500", delay: 300, height: 175 },
+    { color: "bg-purple-400", darkColor: "dark:bg-purple-500", delay: 450, height: 170 },
+    { color: "bg-pink-500", darkColor: "dark:bg-pink-600", delay: 100, height: 160 },
+    { color: "bg-orange-400", darkColor: "dark:bg-orange-500", delay: 250, height: 185 },
+    { color: "bg-rose-400", darkColor: "dark:bg-rose-500", delay: 400, height: 168 },
+    { color: "bg-fuchsia-400", darkColor: "dark:bg-fuchsia-500", delay: 200, height: 178 },
+    { color: "bg-red-500", darkColor: "dark:bg-red-600", delay: 350, height: 172 },
+    { color: "bg-amber-400", darkColor: "dark:bg-amber-500", delay: 500, height: 163 },
   ];
 
   return (
-    <div className="flex gap-6 items-end justify-center">
+    <div className="flex gap-4 items-end justify-center flex-wrap max-w-4xl">
       {tulips.map((tulip, index) => (
         <Tulip
           key={index}
