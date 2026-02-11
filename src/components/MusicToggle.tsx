@@ -1,8 +1,25 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function MusicToggle() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [playing, setPlaying] = useState<boolean>(false);
+  const [playing, setPlaying] = useState(false);
+
+  // Auto play on mount (muted first for browser policy)
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.5; // optional
+    audio
+      .play()
+      .then(() => {
+        setPlaying(true);
+      })
+      .catch(() => {
+        // Autoplay blocked (normal on some browsers)
+        setPlaying(false);
+      });
+  }, []);
 
   const toggleMusic = () => {
     const audio = audioRef.current;
@@ -22,7 +39,9 @@ export default function MusicToggle() {
       <audio ref={audioRef} loop src="/love.mp3" />
       <button
         onClick={toggleMusic}
-        className="absolute top-4 left-4 px-4 py-2 rounded-full bg-pink-500 text-white text-sm"
+        className="px-4 py-2 rounded-full 
+                   bg-pink-500 text-white text-sm 
+                   shadow-md hover:scale-105 transition"
       >
         {playing ? "⏸ Music" : "🎵 Music"}
       </button>
