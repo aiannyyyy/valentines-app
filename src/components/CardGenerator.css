@@ -106,6 +106,72 @@
   box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
 }
 
+.file-input {
+  width: 100%;
+  padding: 10px;
+  border: 2px dashed #ffc0cb;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+}
+
+.file-input:hover {
+  border-color: #e91e63;
+  background: #fff5f8;
+}
+
+.file-input::-webkit-file-upload-button {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #e91e63 0%, #f06292 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.image-preview {
+  margin-top: 15px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #ffc0cb;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(233, 30, 99, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.remove-image-btn:hover {
+  background: #c2185b;
+  transform: scale(1.1);
+}
+
 .generate-btn {
   width: 100%;
   padding: 15px;
@@ -240,7 +306,7 @@
 
 .top-decoration {
   font-size: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .deco-heart {
@@ -256,8 +322,24 @@
 .dear-text {
   color: #e91e63;
   font-size: 28px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-family: 'Georgia', serif;
+}
+
+.card-image {
+  width: 100%;
+  max-height: 180px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid #ffc0cb;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .message-content {
@@ -265,24 +347,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 10px 0;
 }
 
 .message-content p {
-  font-size: 18px;
-  line-height: 1.8;
+  font-size: 16px;
+  line-height: 1.6;
   color: #555;
   text-align: center;
   max-width: 300px;
 }
 
 .signature {
-  margin-top: 30px;
+  margin-top: 15px;
 }
 
 .with-love {
   font-style: italic;
   color: #888;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.from-name {
+  color: #e91e63;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Brush Script MT', cursive;
+  margin: 0;
 }
 
 .heart-signature {
@@ -290,7 +382,7 @@
 }
 
 .bottom-decoration {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .small-heart {
@@ -357,7 +449,7 @@
 @media (max-width: 480px) {
   .flip-card {
     width: 320px;
-    height: 450px;
+    height: 500px;
   }
 
   .form-card {
@@ -373,7 +465,11 @@
   }
 
   .message-content p {
-    font-size: 16px;
+    font-size: 14px;
+  }
+
+  .card-image {
+    max-height: 140px;
   }
 
   .back-button {

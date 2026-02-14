@@ -10,8 +10,29 @@ const CardGenerator: React.FC<CardGeneratorProps> = ({ onBack }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [showForm, setShowForm] = useState(true);
   const [userName, setUserName] = useState('');
+  const [userFrom, setUserFrom] = useState('');
   const [userMessage, setUserMessage] = useState('');
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setUploadedImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   const handleGenerateCard = () => {
     if (userName.trim()) {
@@ -26,6 +47,8 @@ const CardGenerator: React.FC<CardGeneratorProps> = ({ onBack }) => {
         const canvas = await html2canvas(cardRef.current, {
           scale: 2,
           backgroundColor: null,
+          useCORS: true,
+          allowTaint: true,
         });
         
         const link = document.createElement('a');
@@ -42,7 +65,12 @@ const CardGenerator: React.FC<CardGeneratorProps> = ({ onBack }) => {
     setShowForm(true);
     setIsFlipped(false);
     setUserName('');
+    setUserFrom('');
     setUserMessage('');
+    setUploadedImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   return (
@@ -72,6 +100,18 @@ const CardGenerator: React.FC<CardGeneratorProps> = ({ onBack }) => {
             </div>
 
             <div className="form-group">
+              <label htmlFor="from">Your Name (Optional)</label>
+              <input
+                id="from"
+                type="text"
+                placeholder="From..."
+                value={userFrom}
+                onChange={(e) => setUserFrom(e.target.value)}
+                className="input-field"
+              />
+            </div>
+
+            <div className="form-group">
               <label htmlFor="message">Your Message (Optional)</label>
               <textarea
                 id="message"
@@ -82,6 +122,30 @@ const CardGenerator: React.FC<CardGeneratorProps> = ({ onBack }) => {
                 rows={5}
               />
               <p className="helper-text">Leave blank to use default message</p>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="image">Add a Picture (Optional)</label>
+              <input
+                id="image"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                ref={fileInputRef}
+                className="file-input"
+              />
+              {uploadedImage && (
+                <div className="image-preview">
+                  <img src={uploadedImage} alt="Preview" />
+                  <button 
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="remove-image-btn"
+                  >
+                    ✕ Remove
+                  </button>
+                </div>
+              )}
             </div>
 
             <button 
@@ -120,6 +184,12 @@ const CardGenerator: React.FC<CardGeneratorProps> = ({ onBack }) => {
                   
                   <h2 className="dear-text">Dear {userName},</h2>
                   
+                  {uploadedImage && (
+                    <div className="card-image">
+                      <img src={uploadedImage} alt="Card image" crossOrigin="anonymous" />
+                    </div>
+                  )}
+                  
                   <div className="message-content">
                     {userMessage ? (
                       <p>{userMessage}</p>
@@ -134,7 +204,11 @@ const CardGenerator: React.FC<CardGeneratorProps> = ({ onBack }) => {
 
                   <div className="signature">
                     <p className="with-love">With Love,</p>
-                    <div className="heart-signature">💌</div>
+                    {userFrom ? (
+                      <p className="from-name">{userFrom}</p>
+                    ) : (
+                      <div className="heart-signature">💌</div>
+                    )}
                   </div>
 
                   <div className="bottom-decoration">
